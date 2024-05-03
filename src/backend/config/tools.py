@@ -6,6 +6,7 @@ from enum import StrEnum
 from backend.schemas.tool import Category, ManagedTool
 from backend.tools.function_tools import (
     CalculatorFunctionTool,
+    MarketCapTool,
     PythonInterpreterFunctionTool,
 )
 from backend.tools.retrieval import (
@@ -32,6 +33,7 @@ class ToolName(StrEnum):
     Python_Interpreter = "Python_Interpreter"
     Calculator = "Calculator"
     Tavily_Internet_Search = "Internet Search"
+    Market_Cap = "Market_Cap"
 
 
 ALL_TOOLS = {
@@ -94,6 +96,15 @@ ALL_TOOLS = {
         error_message="TavilyInternetSearch not available, please make sure to set the TAVILY_API_KEY environment variable.",
         category=Category.DataLoader,
         description="Returns a list of relevant document snippets for a textual query retrieved from the internet using Tavily.",
+    ),
+    ToolName.Market_Cap: ManagedTool(
+        name=ToolName.Market_Cap,
+        implementation=MarketCapTool,
+        is_visible=True,
+        is_available=MarketCapTool.is_available(),
+        error_message="MarketCapTool not available, please make sure to set the Market_CAP_API environment variable.",
+        category=Category.Function,
+        description="Retrieves the market cap of a ticker.",
     ),
 }
 
