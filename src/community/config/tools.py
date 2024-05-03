@@ -1,7 +1,7 @@
 from enum import StrEnum
 
 from community.tools import Category, ManagedTool
-from community.tools.function_tools import WolframAlphaFunctionTool
+from community.tools.function_tools import MarketCapTool, WolframAlphaFunctionTool
 from community.tools.retrieval import (
     ArxivRetriever,
     ConnectorRetriever,
@@ -16,6 +16,7 @@ class CommunityToolName(StrEnum):
     Pub_Med = "Pub Med"
     File_Upload_LlamaIndex = "File Reader - LlamaIndex"
     Wolfram_Alpha = "Wolfram_Alpha"
+    Market_Cap = "Market Cap"
 
 
 COMMUNITY_TOOLS = {
@@ -64,6 +65,15 @@ COMMUNITY_TOOLS = {
         category=Category.Function,
         description="Evaluate arithmetic expressions.",
     ),
+    CommunityToolName.Market_Cap: ManagedTool(
+        name=CommunityToolName.Market_Cap,
+        implementation=MarketCapTool,
+        is_visible=True,
+        is_available=MarketCapTool.is_available(),
+        error_message="MarketCapTool is not available, please set the Market_CAP_API environment variable.",
+        category=Category.Function,
+        description="Retrieves the market cap of a ticker.",
+    ),
 }
 
 # For main.py cli setup script
@@ -71,6 +81,11 @@ COMMUNITY_TOOLS_SETUP = {
     CommunityToolName.Wolfram_Alpha: {
         "secrets": [
             "WOLFRAM_ALPHA_APP_ID",
+        ],
+    },
+    CommunityToolName.Market_Cap: {
+        "secrets": [
+            "Market_CAP_API",
         ],
     },
 }
