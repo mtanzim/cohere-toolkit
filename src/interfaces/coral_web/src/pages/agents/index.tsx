@@ -3,9 +3,9 @@ import { GetServerSideProps, NextPage } from 'next';
 import { useContext, useEffect } from 'react';
 
 import { CohereClient } from '@/cohere-client';
+import Conversation from '@/components/Agents/Conversation';
 import { Layout, LeftSection, MainSection } from '@/components/Agents/Layout';
 import { LeftPanel } from '@/components/Agents/LeftPanel';
-import Conversation from '@/components/Conversation';
 import { BannerContext } from '@/context/BannerContext';
 import { useListAllDeployments } from '@/hooks/deployments';
 import { useExperimentalFeatures } from '@/hooks/experimentalFeatures';

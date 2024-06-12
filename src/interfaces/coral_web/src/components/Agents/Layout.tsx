@@ -3,6 +3,7 @@ import { capitalize } from 'lodash';
 import React, { Children, PropsWithChildren, useContext } from 'react';
 
 import { ConfigurationDrawer } from '@/components/Conversation/ConfigurationDrawer';
+import ConversationListPanel from '@/components/ConversationList/ConversationListPanel';
 import { DeploymentsDropdown } from '@/components/DeploymentsDropdown';
 import { EditEnvVariablesButton } from '@/components/EditEnvVariablesButton';
 import { Banner } from '@/components/Shared';
@@ -63,12 +64,53 @@ export const Layout: React.FC<Props> = ({ title = 'Chat', children }) => {
         <div className={cn('relative flex h-full flex-grow flex-nowrap gap-3 overflow-hidden')}>
           <div
             className={cn(
-              'w-16 px-4 py-6 lg:flex-grow-0',
-              'flex flex-grow flex-col rounded-lg border',
-              'border-marble-400 bg-marble-100'
+              'px-4 py-6 lg:flex-grow-0',
+              'flex flex-grow gap-x-2 rounded-lg border',
+              'border-marble-400 bg-marble-100',
+              'transition-transform duration-500 ease-in-out',
+              'lg:transition-[min-width,max-width] lg:duration-300',
+              {
+                'min-w-16 max-w-16':
+                  !isMobileConvListPanelOpen && !isConvListPanelOpen && isDesktop,
+                'max-w-[calc(242px+72px)] 2xl:max-w-[calc(300px+72px)] 3xl:max-w-[calc(360px+72px)]':
+                  isMobileConvListPanelOpen || (isConvListPanelOpen && isDesktop),
+              }
             )}
           >
             {leftElement}
+            <Transition
+              as="div"
+              show={isMobileConvListPanelOpen || (isConvListPanelOpen && isDesktop)}
+              enterFrom={cn(
+                '-translate-x-full lg:translate-x-0',
+                'lg:mr-0 lg:opacity-0 lg:min-w-0 lg:max-w-0'
+              )}
+              enterTo={cn(
+                'translate-x-0',
+                'lg:mr-3 lg:opacity-100',
+                'lg:min-w-left-panel-lg 2xl:min-w-left-panel-2xl 3xl:min-w-left-panel-3xl',
+                'lg:max-w-left-panel-lg 2xl:max-w-left-panel-2xl 3xl:max-w-left-panel-3xl'
+              )}
+              leaveFrom={cn(
+                'translate-x-0',
+                'lg:mr-3 lg:opacity-100',
+                'lg:min-w-left-panel-lg 2xl:min-w-left-panel-2xl 3xl:min-w-left-panel-3xl',
+                'lg:max-w-left-panel-lg 2xl:max-w-left-panel-2xl 3xl:max-w-left-panel-3xl'
+              )}
+              leaveTo={cn(
+                '-translate-x-full lg:translate-x-0',
+                'lg:mr-0 lg:opacity-0 lg:border-0 lg:min-w-0 lg:max-w-0'
+              )}
+              className={cn(
+                'transition-transform duration-500 ease-in-out',
+                'lg:transition-[min-width,max-width,margin,opacity,border-width] lg:duration-300',
+                'h-full w-full',
+                'flex flex-col',
+                'border-marble-400 bg-marble-100'
+              )}
+            >
+              <ConversationListPanel />
+            </Transition>
           </div>
           <Transition
             as="main"
