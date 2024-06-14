@@ -5,6 +5,7 @@ const INITIAL_STATE: Required<State> = {
   isConfigDrawerOpen: false,
   isConvListPanelOpen: true,
   isMobileConvListPanelOpen: false,
+  isEditAgentDrawerOpen: false,
 };
 
 type State = {
@@ -12,6 +13,7 @@ type State = {
   isConfigDrawerOpen: boolean;
   isConvListPanelOpen: boolean;
   isMobileConvListPanelOpen: boolean;
+  isEditAgentDrawerOpen: boolean;
 };
 
 type Actions = {
