@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 
 from alembic.command import upgrade
 from alembic.config import Config
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.config.auth import is_authentication_enabled, verify_migrate_token
@@ -16,7 +16,6 @@ from backend.routers.experimental_features import router as experimental_feature
 from backend.routers.tool import router as tool_router
 from backend.routers.user import router as user_router
 from backend.services.logger import LoggingMiddleware
-
 
 # CORS Origins
 ORIGINS = ["*"]
