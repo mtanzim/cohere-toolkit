@@ -1,13 +1,16 @@
+import datetime
 from authlib.integrations.starlette_client import OAuthError
-from fastapi import APIRouter, Depends, HTTPException
+from backend.database_models.tool_auth import ToolAuth
+from fastapi import APIRouter, HTTPException
+import google_auth_oauthlib
 from starlette.requests import Request
 from starlette.responses import RedirectResponse
 
 from backend.config.auth import ENABLED_AUTH_STRATEGY_MAPPING
 from backend.config.routers import RouterName
-from backend.database_models import get_session
 from backend.database_models.database import DBSessionDep
 from backend.schemas.auth import Auth, Login
+from backend.crud import tool_auth as tool_auth_crud
 from backend.services.auth.jwt import JWTService
 from backend.services.auth.utils import (
     get_or_create_user,
@@ -155,12 +158,36 @@ async def logout(request: Request):
 
 
 @router.get("/tool/auth")
-async def login(request: Request):
+async def login(request: Request, session: DBSessionDep):
     # TODO the client redirect to this endpoint which should store the URL with the User ID in the DB with tools name 
     # General Flow:
     # store the url in the tools config 
     # store the access token per tool 
     # in the tool get the access token to search 
     # document all of this 
+    # todo we have to implement the state id for getting the user id!
+    print("HERE <=====================")
+    print(request.query_params)
+    print(request.url)
+
+    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
+    'client_secret.json',
+    scopes=['https://www.googleapis.com/auth/drive.metadata.readonly'],
+    state=request.query_params.get("state"))
+    flow.redirect_uri = "http://localhost:4000"
+
+    flow.fetch_token(authorization_response=request.url)
+
+    tool_id = request.query_params.get("state")
+    code = request.query_params.get("code")
+    tool_auth_crud.create_tool_auth(session, ToolAuth(
+        user_id="user_id",
+        tool_id=tool_id,
+        token_type="todo",
+        encrypted_access_token=str.encode(code), # todo encrypt
+        encrypted_refresh_token=str.encode("todo"),
+        expires_at=datetime.datetime.now())
+    )
     response = RedirectResponse("http://localhost:4000")
     return response
+

@@ -38,6 +38,9 @@ itsdangerous = "^2.2.0"
 bcrypt = "^4.1.2"
 pypdf = "^4.2.0"
 pyjwt = "^2.8.0"
+google_auth_oauthlib ="^1.2.0"
+google-auth-httplib2="^0.2.0"
+google-api-python-client="^2.133.0"
 
 [tool.poetry.group.dev]
 optional = true
