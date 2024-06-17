@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 
 from alembic.command import upgrade
 from alembic.config import Config
+from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -16,6 +17,8 @@ from backend.routers.experimental_features import router as experimental_feature
 from backend.routers.tool import router as tool_router
 from backend.routers.user import router as user_router
 from backend.services.logger import LoggingMiddleware
+
+load_dotenv()
 
 # CORS Origins
 ORIGINS = ["*"]
