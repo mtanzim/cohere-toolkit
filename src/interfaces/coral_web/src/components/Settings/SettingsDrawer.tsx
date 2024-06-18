@@ -1,19 +1,23 @@
 import { Transition } from '@headlessui/react';
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Configuration } from '@/components/Configuration';
 import { Dot } from '@/components/Dot';
 import IconButton from '@/components/IconButton';
-import { Text } from '@/components/Shared';
+import { Tabs, Text } from '@/components/Shared';
+import { SETTINGS_DRAWER_ID } from '@/constants';
 import { useIsGroundingOn } from '@/hooks/grounding';
 import { useCitationsStore, useSettingsStore } from '@/stores';
 import { cn } from '@/utils';
 
+import { SettingsTab } from './SettingsTab';
+import { ToolsTab } from './ToolsTab';
+
 /**
- * @description Renders the configuration drawer of the main content.
+ * @description Renders the settings drawer of the main content.
  * It opens up on top of the citation panel/the main content.
  */
-export const ConfigurationDrawer: React.FC = () => {
+export const SettingsDrawer: React.FC = () => {
+  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const {
     settings: { isConfigDrawerOpen },
     setSettings,
@@ -55,7 +59,21 @@ export const ConfigurationDrawer: React.FC = () => {
           <Text styleAs="p-lg">Tools</Text>
         </span>
       </header>
-      <Configuration />
+
+      <section id={SETTINGS_DRAWER_ID} className="h-full w-full overflow-y-auto rounded-b-lg">
+        <Tabs
+          tabs={['Tools', 'Settings']}
+          selectedIndex={selectedTabIndex}
+          onChange={setSelectedTabIndex}
+          tabGroupClassName="h-full"
+          tabClassName="pt-2.5"
+          panelsClassName="pt-7 lg:pt-7 px-0 flex flex-col rounded-b-lg bg-marble-100 md:rounded-b-none"
+          fitTabsContent={true}
+        >
+          <ToolsTab />
+          <SettingsTab />
+        </Tabs>
+      </section>
     </Transition>
   );
 };
