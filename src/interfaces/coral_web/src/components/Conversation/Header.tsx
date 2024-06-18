@@ -142,6 +142,11 @@ export const Header: React.FC<Props> = ({ conversationId, isStreaming }) => {
             anchor="left start"
           />
           <IconButton
+            iconName="edit"
+            onClick={handleOpenAgentDrawer}
+            // className={cn('hidden', { 'md:flex': !!agentId })}
+          />
+          <IconButton
             iconName="trash"
             onClick={handleDelete}
             disabled={isStreaming}

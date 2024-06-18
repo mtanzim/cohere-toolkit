@@ -3,6 +3,7 @@ import { capitalize } from 'lodash';
 import React, { Children, PropsWithChildren } from 'react';
 
 import { AgentsSidePanel } from '@/components/Agents/AgentsSidePanel';
+import { UpdateAgentDrawer } from '@/components/Agents/UpdateAgentDrawer';
 import { ConfigurationDrawer } from '@/components/Conversation/ConfigurationDrawer';
 import { PageHead } from '@/components/Shared/PageHead';
 import { useIsDesktop } from '@/hooks/breakpoint';
@@ -74,6 +75,7 @@ export const Layout: React.FC<Props> = ({ title = 'Chat', children }) => {
             </section>
           </Transition>
           <ConfigurationDrawer />
+          <UpdateAgentDrawer agent={{}} />
         </div>
       </div>
     </>
