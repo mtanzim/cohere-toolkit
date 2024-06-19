@@ -57,6 +57,8 @@ def users():
 
 # Chat
 def chat():
+    print("Running Agents")
+    
     response = requests.post(
         "http://localhost:8000/v1/chat-stream",
         headers=headers,
@@ -112,3 +114,4 @@ def del_all():
     _ = requests.delete(f"{base_url}/conversations/{conversation_id}", headers=headers)
 
 agents()
+chat()
