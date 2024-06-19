@@ -16,10 +16,6 @@ response = requests.post(f"{base_url}/users", headers=headers, json={"fullname":
 response_json = response.json()
 user_id = response_json["id"]
 
-
-
-
-
 def agents():
     print("Running Agents")
     ## Agents
