@@ -4,6 +4,7 @@ import logging
 import os
 import threading
 import uuid
+import json
 
 from httpx import AsyncHTTPTransport
 from httpx._client import AsyncClient
@@ -172,8 +173,8 @@ async def report_metrics(data):
         data = to_dict(data)
 
     data["secret"] = "secret"
-    signal = {"signal": data}
-    print(signal)
+    json_string = json.dumps(data)
+    print(f"\n\ncurl -X POST -H \"Content-Type: application/json\" -d '{json_string}' ENDPOINT_HERE\n\n")
 
     if not REPORT_ENDPOINT:
         raise Exception("No report endpoint set")

@@ -44,7 +44,7 @@ def agents():
     _ = requests.put(
         f"{base_url}/agents/{agent_id}", headers=headers, json={"name": "new_name"}
     )
-
+    _ = requests.delete(f"{base_url}/agents/{agent_id}", headers=headers)
 
 def users():
     # # List Users
