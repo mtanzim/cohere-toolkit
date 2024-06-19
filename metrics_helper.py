@@ -100,6 +100,8 @@ def tools():
         json={"title": "new_title"},
     )
 
+    # del conversation
+    _ = requests.delete(f"{base_url}/conversations/{conversation_id}", headers=headers)
 
 ## Files
 # _ = requests.get(f"{base_url}/files/conversation_id", headers=headers)
@@ -108,10 +110,11 @@ def tools():
 
 
 # Delete Everything
-def del_all():
+def del_user():
     _ = requests.delete(f"{base_url}/users/{user_id}", headers=headers)
-    _ = requests.delete(f"{base_url}/agents/{agent_id}", headers=headers)
-    _ = requests.delete(f"{base_url}/conversations/{conversation_id}", headers=headers)
+    
 
 agents()
 chat()
+users()
+del_user()

@@ -178,7 +178,7 @@ async def report_metrics(data):
     json_string = json.dumps(signal)
     # just general curl commands to test the endpoint for now
     print(
-        f"\n\ncurl -X POST -H \"Content-Type: application/json\" -d '{json_string}' ENDPOINT_HERE\n\n"
+        f"\n\ncurl -X POST -H \"Content-Type: application/json\" -d '{json_string}' $ENDPOINT\n\n"
     )
 
     if not REPORT_ENDPOINT:
