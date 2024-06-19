@@ -11,6 +11,7 @@ class MetricsDataBase(BaseModel):
     method: str
     endpoint_name: str
     success: bool
+    user_id: str | None = None
     timestamp: float = time.time()
     secret: str = "secret"
 
@@ -24,6 +25,8 @@ class MetricsData(MetricsDataBase):
     error: str | None = None
     object_ids: dict[str, str] | None = None
     duration_ms: float | None = None
+    assistant_id: str | None = None
+    assistant: dict[str, Any] | None = None
     meta: dict[str, Any] | None = None
     assistant_id: str | None = None
     assistant: dict[str, Any] | None = None

@@ -173,8 +173,12 @@ async def report_metrics(data):
         data = to_dict(data)
 
     data["secret"] = "secret"
-    json_string = json.dumps(data)
-    print(f"\n\ncurl -X POST -H \"Content-Type: application/json\" -d '{json_string}' ENDPOINT_HERE\n\n")
+    signal = {signal: data}
+    json_string = json.dumps(signal)
+    # just general curl commands to test the endpoint for now
+    print(
+        f"\n\ncurl -X POST -H \"Content-Type: application/json\" -d '{json_string}' <ENDPOINT_HERE>\n\n"
+    )
 
     if not REPORT_ENDPOINT:
         raise Exception("No report endpoint set")
